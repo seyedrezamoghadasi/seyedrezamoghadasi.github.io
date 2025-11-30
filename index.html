@@ -7,24 +7,17 @@
   <style>
     :root {
       --bg: #f3f4f6;
-      --bg-alt: #e5e7eb;
       --card-bg: #ffffff;
       --text-main: #0f172a;
       --text-muted: #6b7280;
       --accent: #2563eb;
-      --accent-soft: #dbeafe;
       --border: #e5e7eb;
       --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
       --radius-card: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -62,8 +55,8 @@
       font-weight: 650;
       font-size: 1.08rem;
       letter-spacing: 0.03em;
-      text-transform: none;
       color: var(--text-main);
+      cursor: pointer;
     }
 
     .brand span {
@@ -78,13 +71,18 @@
       font-size: 0.95rem;
     }
 
-    .nav-links a {
+    .nav-link {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
       color: #4b5563;
       position: relative;
       padding-bottom: 4px;
     }
 
-    .nav-links a::after {
+    .nav-link::after {
       content: "";
       position: absolute;
       left: 0;
@@ -98,10 +96,16 @@
       transition: transform 0.2s ease;
     }
 
-    .nav-links a:hover {
+    .nav-link:hover {
       color: var(--text-main);
     }
-    .nav-links a:hover::after {
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+    .nav-link.active {
+      color: var(--text-main);
+    }
+    .nav-link.active::after {
       transform: scaleX(1);
     }
 
@@ -115,7 +119,7 @@
       gap: 48px;
     }
 
-    /* Sidebar (left) */
+    /* Sidebar */
     .sidebar {
       background: linear-gradient(180deg, #ffffff, #f9fafb);
       border-radius: var(--radius-card);
@@ -142,7 +146,6 @@
       border-radius: 50%;
       object-fit: cover;
       display: block;
-      background: #e5e7eb;
     }
 
     .name {
@@ -197,17 +200,14 @@
       box-shadow: 0 3px 8px rgba(148, 163, 184, 0.55);
       flex-shrink: 0;
     }
-
     .icon-circle.in {
       font-weight: 700;
       font-size: 11px;
       background: #e0f2fe;
     }
 
-    /* Right content */
-    .content {
-      min-width: 0;
-    }
+    /* Content & cards */
+    .content { min-width: 0; }
 
     .section-card {
       background: var(--card-bg);
@@ -236,15 +236,8 @@
       margin-bottom: 0.65em;
       letter-spacing: 0.02em;
     }
-
-    .section-card h1 {
-      font-size: 1.7rem;
-    }
-
-    .section-card h2 {
-      font-size: 1.35rem;
-    }
-
+    .section-card h1 { font-size: 1.7rem; }
+    .section-card h2 { font-size: 1.35rem; }
     .section-card h3 {
       margin-top: 1.2em;
       margin-bottom: 0.45em;
@@ -261,18 +254,19 @@
       padding-left: 1.15em;
       margin-top: 0.25em;
     }
-
-    li + li {
-      margin-top: 0.35em;
-    }
+    li + li { margin-top: 0.35em; }
 
     code {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.9em;
       background: #f3f4f6;
       padding: 2px 4px;
       border-radius: 4px;
     }
+
+    /* Tabs */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
     /* Responsive */
     @media (max-width: 960px) {
@@ -308,26 +302,27 @@
 <body>
 
 <header class="top-nav">
-  <div class="brand">
-    <a href="#home">Seyed Reza Moghadasi</a>
-    <span> · Power Systems</span>
+  <div class="brand" data-tab-target="tab-home">
+    Seyed Reza Moghadasi <span>· Power &amp; Renewable Energy Systems</span>
   </div>
   <nav class="nav-links">
-    <a href="#cv">CV</a>
-    <a href="#research">Research</a>
-    <a href="#qa">Q&amp;A</a>
-    <a href="#thoughts">Thoughts</a>
+    <button class="nav-link active" data-tab-target="tab-home">Home</button>
+    <button class="nav-link" data-tab-target="tab-cv">CV</button>
+    <button class="nav-link" data-tab-target="tab-research">Research</button>
+    <button class="nav-link" data-tab-target="tab-publications">Publications</button>
+    <button class="nav-link" data-tab-target="tab-qa">Q&amp;A</button>
+    <button class="nav-link" data-tab-target="tab-thoughts">Thoughts</button>
   </nav>
 </header>
 
 <main class="page">
-  <!-- LEFT SIDEBAR -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="profile-pic-wrap">
       <img src="profile.jpg" alt="Seyed Reza Moghadasi" class="profile-pic">
     </div>
     <div class="name">Seyed Reza Moghadasi</div>
-    <div class="role">Researcher · Power Systems Engineer</div>
+    <div class="role">Researcher · Power &amp; Renewable Energy Systems</div>
     <div class="location">Babolsar, Iran</div>
 
     <div class="divider"></div>
@@ -358,127 +353,189 @@
     </ul>
   </aside>
 
-  <!-- RIGHT CONTENT -->
-  <div class="content" id="home">
-    <section class="section-card">
-      <h1>Welcome to Reza’s Power Systems Wonderland ⚡</h1>
+  <!-- RIGHT CONTENT (TABS) -->
+  <div class="content">
+    <!-- HOME -->
+    <section id="tab-home" class="section-card tab-panel active">
+      <h1>Welcome to Reza’s Power &amp; Renewable Energy World ⚡🌱</h1>
+      <p>
+        Welcome to my academic space! I work at the intersection of <b>power systems</b>, <b>renewable energy</b>,
+        and <b>energy engineering</b>, with a focus on how modern power grids can reliably integrate
+        distributed resources and energy storage.
+      </p>
       <p>
         I am an M.Sc. student in Electrical Engineering – Power Systems at Amirkabir University of Technology
-        (Tehran, Iran) and a research assistant at the FACTS Laboratory. My work focuses on techno-economic
-        planning and operation of mobile and stationary battery energy storage systems in microgrids and
-        distribution networks.
+        (Tehran, Iran) and a research assistant at the FACTS Laboratory. My current research centers on
+        techno-economic planning of <b>Mobile Battery Energy Storage Systems</b> for microgrids and distribution
+        networks, with strong links to smart grids, electric mobility, and sustainable operation.
       </p>
       <p>
-        I am particularly interested in smart grids, distributed energy resources, and AI-based methods for
-        power system operation, planning, and control.
-      </p>
-      <p>
-        For more detailed information, feel free to explore my <a href="#research">research interests</a>
-        and <a href="#publications">publications</a>, or scroll down to see my <a href="#cv">CV</a>.
+        If you are interested in my background, feel free to explore the tabs above:
+        a structured <b>CV</b>, detailed <b>Research</b> activities, and a list of my
+        <b>Publications</b>. I also plan to share short notes in the <b>Q&amp;A</b> and <b>Thoughts</b> sections.
       </p>
     </section>
 
-    <!-- CV -->
-    <section id="cv" class="section-card">
-      <h2>CV – Education &amp; Experience</h2>
+    <!-- CV TAB -->
+    <section id="tab-cv" class="section-card tab-panel">
+      <h2>Curriculum Vitae</h2>
 
       <h3>Education</h3>
       <ul>
         <li>
-          <b>M.Sc. in Electrical Engineering – Power Systems</b>,  
-          Amirkabir University of Technology, 2022–2025<br>
+          <b>M.Sc. in Electrical Engineering – Power Systems</b>, Amirkabir University of Technology, 2022–2025<br>
           Thesis: <i>Planning of Mobile Energy Storage Systems for Microgrid Energy Management with the Objective of Reducing Operational Costs.</i><br>
           GPA: 16.35/20 · GPA with master’s thesis: 3.6/4
         </li>
         <li>
-          <b>B.Sc. in Electrical Engineering</b>,  
-          University of Isfahan, 2016–2021<br>
+          <b>B.Sc. in Electrical Engineering</b>, University of Isfahan, 2016–2021<br>
           GPA: 13.58/20 · Power courses GPA: 14.97/20
         </li>
       </ul>
 
-      <h3>Experience</h3>
+      <h3>Work Experience</h3>
       <ul>
         <li>
-          <b>Research Assistant</b>, Amirkabir University of Technology, 2023–2025 – MBESS planning and
-          optimization in microgrids, 33-bus distribution network studies, and integration of autonomous
-          electric trucks for battery transport under uncertainty.
+          <b>Research Assistant</b>, Amirkabir University of Technology, 2023–2025<br>
+          Mobile Battery Energy Storage Systems (MBESS) planning and operation in microgrids; multi-objective
+          optimization using meta-heuristic algorithms on a 33-bus distribution network; analysis of autonomous
+          electric trucks for battery transport under renewable and load uncertainties.
         </li>
         <li>
-          <b>Internship</b>, Regional Electricity Company of Mazandaran Province, 2019 – Practical work on
-          transformers, cables, LV lines, and AutoCAD-based design of distribution networks.
+          <b>Internship</b>, Regional Electricity Company of Mazandaran Province, 2019<br>
+          Practical experience with transformers, cables, low-voltage lines, and AutoCAD-based design of
+          distribution networks and pole placement.
         </li>
       </ul>
 
       <h3>Awards &amp; Honors</h3>
       <ul>
         <li>
-          Top ranks in: FACTS (19.6/20, 1st), Power System Utilization (18/20, 2nd),
+          Top-class rank in: FACTS (19.6/20, 1st), Power System Utilization (18/20, 2nd),
           Management of Conventional and Smart Distribution Systems (18/20, 2nd),
           Industrial Electronics (17.35/20, 3rd).
         </li>
-        <li>Awarded fellowship, graduate program (AUT), 2023–2025.</li>
-        <li>Top 1% in national M.Sc. entrance exam in electrical engineering, 2022.</li>
+        <li>Awarded fellowship, graduate program (Amirkabir University of Technology), 2023–2025.</li>
+        <li>Top 1% in the national master’s entrance exam in electrical engineering, 2022.</li>
         <li>Awarded fellowship, undergraduate program, 2016–2021.</li>
-        <li>Top 1% in national B.Sc. entrance exam (konkoor) in electrical engineering, 2016.</li>
+        <li>Top 1% in the national university entrance exam (konkoor) in electrical engineering, 2016.</li>
       </ul>
 
       <h3>English &amp; Computer Skills</h3>
       <ul>
         <li>TOEFL iBT – Test date: February 2026.</li>
-        <li>Microsoft Office (Word, Excel, PowerPoint) for analysis, reporting, and presentations.</li>
+        <li>Microsoft Office (Word, Excel, PowerPoint) for data analysis, reporting, and presentations.</li>
         <li>MATLAB/Simulink, EMTP-RV, PSCAD/EMTDC, ETAP, DIgSILENT PowerFactory, HOMER Pro.</li>
         <li>
-          Currently learning Python for data science (NumPy, Pandas, Matplotlib, scikit-learn) and aiming to
-          use TensorFlow/PyTorch for deep learning in smart grids and power system operation.
+          Currently learning Python for data science (NumPy, Pandas, Matplotlib, scikit-learn) and aiming to use
+          TensorFlow/PyTorch for deep learning in smart grids and power system operation.
+        </li>
+      </ul>
+
+      <h3>References</h3>
+      <ul>
+        <li>
+          <b>Dr. Mehrdad Abedi</b> – Professor, Department of Electrical Engineering, Amirkabir University of Technology, Tehran, Iran – 
+          <a href="mailto:abedi@aut.ac.ir">abedi@aut.ac.ir</a>
+        </li>
+        <li>
+          <b>Dr. Gevork B. Gharehpetian</b> – Professor, Department of Electrical Engineering, Amirkabir University of Technology, Tehran, Iran – 
+          <a href="mailto:grptian@aut.ac.ir">grptian@aut.ac.ir</a>
+        </li>
+        <li>
+          <b>Dr. Mohammad Kazem Sheikh-El-Eslami</b> – Professor, Faculty of Electrical and Computer Engineering, Tarbiat Modares University, Tehran, Iran – 
+          <a href="mailto:aleslam@modares.ac.ir">aleslam@modares.ac.ir</a>
+        </li>
+        <li>
+          <b>Dr. Zahra Dehghani Arani</b> – Postdoctoral Researcher, Department of Electrical Engineering, Amirkabir University of Technology, Tehran, Iran – 
+          <a href="mailto:zahra.dehghani.a@aut.ac.ir">zahra.dehghani.a@aut.ac.ir</a>
         </li>
       </ul>
     </section>
 
-    <!-- Research -->
-    <section id="research" class="section-card">
+    <!-- RESEARCH TAB -->
+    <section id="tab-research" class="section-card tab-panel">
       <h2>Research</h2>
 
       <h3>Research Interests</h3>
       <ul>
-        <li>Renewable &amp; Distributed Energy Resources integration</li>
+        <li>Renewable &amp; Distributed Energy Resources integration in sustainable power systems</li>
         <li>Mobile &amp; stationary energy storage systems and electric mobility</li>
-        <li>Microgrids and smart grids energy management</li>
         <li>Operation, planning, reliability, and resilience of power systems</li>
-        <li>Data-driven &amp; AI-based modeling, optimization, and control</li>
-        <li>Power system dynamics, stability, and advanced control</li>
+        <li>Microgrids and smart grids energy management</li>
+        <li>Data-driven &amp; AI-based modeling, optimization, and control in power &amp; energy systems</li>
+        <li>Power system dynamics, stability, transient analysis, and advanced control</li>
       </ul>
 
-      <h3>Technical &amp; Research Experience</h3>
+      <h3>Reviewer Experience</h3>
+      <ul>
+        <li>Journal of Energy Storage (5 papers)</li>
+        <li>Sustainable Cities and Society (1 paper)</li>
+        <li>Journal of Intelligent &amp; Fuzzy Systems (1 paper)</li>
+        <li>14th International Smart Grids Conference (2 papers)</li>
+        <li>29th Electrical Power Distribution Conference (5 papers)</li>
+        <li>15th International Smart Grids Conference (8 papers)</li>
+      </ul>
+
+      <h3>Graduate-Level Research Projects</h3>
       <ul>
         <li>
-          <b>Reviewer</b> for Journal of Energy Storage (5 papers), Sustainable Cities and Society (1),
-          Journal of Intelligent &amp; Fuzzy Systems (1), 14th &amp; 15th International Smart Grids Conferences,
-          and the 29th Electrical Power Distribution Conference.
+          <b>Power System Dynamics 1</b> – Nonlinear modeling and control of a DC generator and a synchronous
+          machine in MATLAB/Simulink; parameter identification, PID-based speed/voltage control, AVR and governor
+          design, and validation via step responses and operating-point linearization.
         </li>
         <li>
-          Graduate projects on power system dynamics and control (DC generator and synchronous machine
-          modeling and PID/AVR/governor design), SVC modeling in PSCAD, hybrid DG system design in HOMER,
-          PSO–ANN based microgrid scheduling, LP-based economic dispatch, and GA-based decentralized energy
-          management in smart distribution networks.
+          <b>FACTS</b> – Modeling and analysis of an SVC connected to a 13.8&nbsp;kV transmission line in PSCAD;
+          TCR/TSC-based reactive power control with PI modulation and coordinated switching logic for voltage regulation.
         </li>
         <li>
-          Undergraduate projects: BLDC motor speed control in MATLAB/Simulink; Smart Incubator and Smart
-          Garden microcontroller-based systems.
+          <b>Distributed Generation (DG)</b> – Design of a hybrid DG system for a residential villa in HOMER using
+          PV, wind, diesel generators, storage, and economic analysis; optimization and sensitivity studies for
+          minimum NPC and reliable operation in grid-connected and islanded modes.
+        </li>
+        <li>
+          <b>Power System Utilization</b> – Optimal energy scheduling in a microgrid using a hybrid PSO–ANN approach
+          on the IEEE-14 bus system; incorporation of realistic load profiles, prices, and weather data; training with
+          Levenberg–Marquardt and performance comparison with BPSO.
+        </li>
+        <li>
+          <b>Optimization in Electrical Power</b> – Economic Dispatch using Linear Programming (EDLP); segmentation
+          and linearization of quadratic generator cost curves; LP formulation solved with <code>linprog</code> to
+          obtain optimal outputs and total system cost for 850&nbsp;MW demand.
+        </li>
+        <li>
+          <b>Management of Conventional and Smart Distribution Systems</b> – Multi-objective decentralized energy
+          management in unbalanced smart distribution networks (IEEE-13 bus) with PV, WT, DG, MT, BESS, and DR
+          under stochastic uncertainties; GA-based optimization achieving substantial cost, loss, and voltage-profile
+          improvements.
         </li>
       </ul>
 
-      <h3 id="publications">Selected Publications</h3>
+      <h3>Undergraduate Projects</h3>
+      <ul>
+        <li>
+          <b>BLDC Motor Speed Control</b> – Simulation of speed control of a BLDC motor using MATLAB/Simulink,
+          presented in December 2020.
+        </li>
+        <li>
+          <b>Embedded Systems</b> – Microcontroller-based “Smart Incubator” and “Smart Garden” systems.
+        </li>
+      </ul>
+    </section>
+
+    <!-- PUBLICATIONS TAB -->
+    <section id="tab-publications" class="section-card tab-panel">
+      <h2>Publications</h2>
+
+      <h3>Journal Papers</h3>
       <ul>
         <li>
           <b>S. R. Moghadasi, Z. Dehghani Arani, M. Abedi, G. B. Gharehpetian.</b><br>
           “Techno-Economic Management of Mobile Battery Energy Storage Systems in Microgrids Considering
           Self-Driving Electric Trucks and Uncertainty of Generation and Consumption.”<br>
           <i>International Journal of Electrical Power and Energy Systems</i>, Published, submitted August 2025.<br>
-          DOI:
-          <a href="https://doi.org/10.1016/j.ijepes.2025.111242" target="_blank">
-            https://doi.org/10.1016/j.ijepes.2025.111242
-          </a>
+          DOI: <a href="https://doi.org/10.1016/j.ijepes.2025.111242" target="_blank">
+          https://doi.org/10.1016/j.ijepes.2025.111242</a>
         </li>
         <li>
           <b>R. Tahmasbpour, S. R. Moghadasi, Z. Dehghani Arani, G. B. Gharehpetian.</b><br>
@@ -500,26 +557,52 @@
       </ul>
     </section>
 
-    <!-- Q&A -->
-    <section id="qa" class="section-card">
+    <!-- Q&A TAB -->
+    <section id="tab-qa" class="section-card tab-panel">
       <h2>Q&amp;A</h2>
       <p>
-        Here I will collect frequently asked questions about my research, publications, and applications of
-        data-driven methods in power systems. Content will be added gradually.
+        Here I plan to collect frequently asked questions about my research, publications, and applications of
+        data-driven methods in power and energy systems. Content will be added gradually.
       </p>
     </section>
 
-    <!-- Thoughts -->
-    <section id="thoughts" class="section-card">
+    <!-- THOUGHTS TAB -->
+    <section id="tab-thoughts" class="section-card tab-panel">
       <h2>Thoughts</h2>
       <p>
-        Short notes on interesting papers, ideas in energy systems, and my journey in learning data science
-        and machine learning for power systems will appear here in the future.
+        Short notes on interesting papers, new ideas in power and renewable energy systems, and my journey learning
+        data science and machine learning for power systems will appear here in the future.
       </p>
       <p>Stay tuned! 🙂</p>
     </section>
   </div>
 </main>
+
+<script>
+  const navLinks = document.querySelectorAll('.nav-link');
+  const brand = document.querySelector('.brand');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  function activateTab(targetId) {
+    panels.forEach(panel => {
+      panel.classList.toggle('active', panel.id === targetId);
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('data-tab-target') === targetId);
+    });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.getAttribute('data-tab-target');
+      activateTab(target);
+    });
+  });
+
+  if (brand) {
+    brand.addEventListener('click', () => activateTab('tab-home'));
+  }
+</script>
 
 </body>
 </html>
