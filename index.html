@@ -5,193 +5,315 @@
   <title>Seyed Reza Moghadasi – Electrical Engineering</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --bg: #f7f7f7;
+      --card-bg: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent: #2563eb;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
+      margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 24px;
+      background: var(--bg);
+      color: var(--text-main);
       line-height: 1.7;
     }
-    h1, h2 {
-      margin-top: 1.2em;
-    }
-    .name {
-      font-size: 2.2rem;
-      font-weight: 700;
-    }
-    .tagline {
-      color: #555;
-      margin-bottom: 0.5rem;
-    }
+
     a {
+      color: var(--accent);
       text-decoration: none;
     }
-    a:hover {
-      text-decoration: underline;
-    }
-    ul {
-      padding-left: 1.2em;
-    }
-    .section {
-      margin-bottom: 1.5em;
-    }
-    header {
+    a:hover { text-decoration: underline; }
+
+    /* Top navigation (مثل عکس) */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
       display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .brand span {
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 0.95rem;
+    }
+    .nav-links a {
+      color: var(--text-main);
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Layout اصلی صفحه */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 32px 48px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 48px;
+    }
+
+    /* کارت سمت چپ مثل پروفایل */
+    .sidebar {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px 20px 28px;
+      border: 1px solid var(--border);
+      text-align: center;
+      align-self: flex-start;
+      position: sticky;
+      top: 88px;
     }
     .profile-pic {
-      width: 130px;
-      height: 130px;
-      object-fit: cover;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 16px;
     }
-    @media (max-width: 700px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    .name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .role {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
     }
 
-    /* Tabs */
-    .tabs {
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 1rem;
-      overflow-x: auto;
-      white-space: nowrap;
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      font-size: 0.93rem;
     }
-    .tab-list {
+    .contact-list li {
       display: flex;
-      gap: 4px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
-    .tab-button {
-      border: none;
-      background: #f5f5f5;
-      padding: 8px 14px;
-      cursor: pointer;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
+    .icon-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      background: #f3f4f6;
       flex-shrink: 0;
     }
-    .tab-button.active {
-      background: #111827;
-      color: #fff;
-    }
-    .tab-content {
-      margin-top: 0.75rem;
-    }
-    .tab-panel {
-      display: none;
-      animation: fadeIn 0.2s ease-in-out;
-    }
-    .tab-panel.active {
-      display: block;
+    .icon-circle.in {
+      font-weight: 700;
+      font-size: 11px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* محتوای سمت راست */
+    .content { min-width: 0; }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 30px 32px;
+      margin-bottom: 26px;
+    }
+    .section-card h1,
+    .section-card h2 {
+      margin-top: 0;
+      margin-bottom: 0.6em;
+    }
+    .section-card h1 {
+      font-size: 1.7rem;
+    }
+    .section-card p {
+      margin-top: 0.4em;
+      margin-bottom: 0.7em;
+    }
+
+    ul { padding-left: 1.2em; }
+
+    /* ریسپانسیو */
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 28px 20px 36px;
+      }
+      .sidebar {
+        position: static;
+      }
+    }
+    @media (max-width: 640px) {
+      .top-nav {
+        padding: 12px 18px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .nav-links {
+        gap: 14px;
+        font-size: 0.86rem;
+        flex-wrap: wrap;
+      }
+      .section-card {
+        padding: 22px 20px;
+      }
     }
   </style>
 </head>
 <body>
-<header>
-  <img src="profile.jpg" alt="Seyed Reza Moghadasi" class="profile-pic">
-  <div>
-    <div class="name">Seyed Reza Moghadasi</div>
-    <div class="tagline">M.Sc. in Electrical Engineering – Power Systems</div>
-    <p>
-      Babolsar, Iran · Phone: +98 (921) 671-8360<br>
-      Email:
-      <a href="mailto:seyedrezamoghadasi2023@gmail.com">seyedrezamoghadasi2023@gmail.com</a><br>
-      Google Scholar:
-      <a href="https://scholar.google.com/citations?user=y5rXcWcAAAAJ&hl=en&oi=ao" target="_blank">
-        Seyed Reza Moghadasi
-      </a><br>
-      ORCID:
-      <a href="https://orcid.org/0009-0002-5105-0406" target="_blank">
-        0009-0002-5105-0406
-      </a><br>
-      LinkedIn:
-      <a href="https://www.linkedin.com/in/seyed-reza-moghadasi" target="_blank">
-        Seyed Reza Moghadasi
-      </a>
-    </p>
+
+<header class="top-nav">
+  <div class="brand">
+    <a href="#home">Seyed Reza Moghadasi</a>
+    <span> · Power Systems</span>
   </div>
+  <nav class="nav-links">
+    <a href="#cv">CV</a>
+    <a href="#research">Research</a>
+    <a href="#qa">Q&amp;A</a>
+    <a href="#thoughts">Thoughts</a>
+  </nav>
 </header>
 
-<!-- Tabs header -->
-<div class="tabs">
-  <div class="tab-list">
-    <button class="tab-button active" data-tab="tab-overview">Overview</button>
-    <button class="tab-button" data-tab="tab-education">Education</button>
-    <button class="tab-button" data-tab="tab-research">Research Interests</button>
-    <button class="tab-button" data-tab="tab-publications">Publications</button>
-    <button class="tab-button" data-tab="tab-experience">Experience</button>
-    <button class="tab-button" data-tab="tab-awards">Awards & Honors</button>
-    <button class="tab-button" data-tab="tab-technical">Technical & Research</button>
-    <button class="tab-button" data-tab="tab-skills">Skills & English</button>
-    <button class="tab-button" data-tab="tab-references">References</button>
-  </div>
-</div>
+<main class="page">
+  <!-- ستون چپ مثل عکس ایرین -->
+  <aside class="sidebar">
+    <img src="profile.jpg" alt="Seyed Reza Moghadasi" class="profile-pic">
+    <div class="name">Seyed Reza Moghadasi</div>
+    <div class="role">Researcher, Power Systems Engineer</div>
 
-<div class="tab-content">
+    <ul class="contact-list">
+      <li>
+        <span class="icon-circle">✉️</span>
+        <a href="mailto:seyedrezamoghadasi2023@gmail.com">Email</a>
+      </li>
+      <li>
+        <span class="icon-circle">🎓</span>
+        <a href="https://scholar.google.com/citations?user=y5rXcWcAAAAJ&hl=en&oi=ao" target="_blank">
+          Google Scholar
+        </a>
+      </li>
+      <li>
+        <span class="icon-circle">ID</span>
+        <a href="https://orcid.org/0009-0002-5105-0406" target="_blank">
+          ORCID
+        </a>
+      </li>
+      <li>
+        <span class="icon-circle in">in</span>
+        <a href="https://www.linkedin.com/in/seyed-reza-moghadasi" target="_blank">
+          LinkedIn
+        </a>
+      </li>
+    </ul>
+  </aside>
 
-  <!-- Overview / short summary -->
-  <div id="tab-overview" class="tab-panel active">
-    <section class="section">
-      <h2>Overview</h2>
+  <!-- ستون راست: خوشامد مثل “Welcome to Irene’s Wonderland” -->
+  <div class="content" id="home">
+    <section class="section-card">
+      <h1>Welcome to Reza’s Power Systems Wonderland ⚡</h1>
       <p>
-        I am a power systems engineer with a strong background in power system analysis, control, and optimization,
-        with research experience in mobile battery energy storage systems, microgrids, and smart grids. My recent work
-        focuses on techno-economic planning of Mobile Energy Storage Systems and AI-based approaches for energy
-        management and power system operation.
+        I am an M.Sc. student in Electrical Engineering – Power Systems at Amirkabir University of Technology
+        (Tehran, Iran) and a research assistant at the FACTS Laboratory. My work focuses on techno-economic
+        planning and operation of mobile and stationary battery energy storage systems in microgrids and
+        distribution networks.
+      </p>
+      <p>
+        I am particularly interested in smart grids, distributed energy resources, and AI-based methods for
+        power system operation, planning, and control.
+      </p>
+      <p>
+        For more detailed information, feel free to explore my <a href="#research">research interests</a>
+        and <a href="#publications">publications</a>, or scroll down to see my <a href="#cv">CV</a>.
       </p>
     </section>
-  </div>
 
-  <!-- Education -->
-  <div id="tab-education" class="tab-panel">
-    <section class="section">
-      <h2>Education</h2>
+    <!-- CV section (برای لینک تب CV) -->
+    <section id="cv" class="section-card">
+      <h2>CV – Education &amp; Experience</h2>
+
+      <h3>Education</h3>
       <ul>
         <li>
           <b>M.Sc. in Electrical Engineering – Power Systems</b>,  
           Amirkabir University of Technology, 2022–2025<br>
-          Thesis title: <i>Planning of Mobile Energy Storage Systems for Microgrid Energy Management with the Objective of Reducing Operational Costs.</i><br>
-          GPA: 16.35/20 &nbsp;·&nbsp; GPA with master’s thesis: 3.6/4
+          Thesis: <i>Planning of Mobile Energy Storage Systems for Microgrid Energy Management with the Objective of Reducing Operational Costs.</i><br>
+          GPA: 16.35/20 · GPA with master’s thesis: 3.6/4
         </li>
         <li>
           <b>B.Sc. in Electrical Engineering</b>,  
           University of Isfahan, 2016–2021<br>
-          GPA: 13.58/20 &nbsp;·&nbsp; Power courses GPA: 14.97/20
+          GPA: 13.58/20 · Power courses GPA: 14.97/20
         </li>
       </ul>
-    </section>
-  </div>
 
-  <!-- Research Interests -->
-  <div id="tab-research" class="tab-panel">
-    <section class="section">
-      <h2>Research Interests</h2>
+      <h3>Experience</h3>
       <ul>
-        <li>Renewable &amp; Distributed Energy Resources Integration in Sustainable Power Systems</li>
-        <li>Mobile &amp; Stationary Energy Storage Systems and Electric Mobility</li>
-        <li>Operation, Planning, Reliability, and Resilience of Power Systems</li>
-        <li>Microgrids and Smart Grids Energy Management</li>
-        <li>Data-Driven &amp; AI-Based Modeling, Optimization, and Control in Power &amp; Energy Systems</li>
-        <li>Power System Dynamics, Stability, Transient and Advanced Control</li>
+        <li>
+          <b>Research Assistant</b>, Amirkabir University of Technology, 2023–2025 – MBESS planning and
+          optimization in microgrids, 33-bus distribution network studies, and integration of autonomous
+          electric trucks for battery transport.
+        </li>
+        <li>
+          <b>Internship</b>, Regional Electricity Company of Mazandaran Province, 2019 – Practical work on
+          transformers, cables, LV lines, and AutoCAD-based design of distribution networks.
+        </li>
+      </ul>
+
+      <h3>Awards &amp; Honors</h3>
+      <ul>
+        <li>
+          Top ranks in: FACTS (19.6/20, 1st), Power System Utilization (18/20, 2nd),
+          Management of Conventional and Smart Distribution Systems (18/20, 2nd),
+          Industrial Electronics (17.35/20, 3rd).
+        </li>
+        <li>Awarded fellowship, graduate program (AUT), 2023–2025.</li>
+        <li>Top 1% in national M.Sc. entrance exam in electrical engineering, 2022.</li>
+        <li>Awarded fellowship, undergraduate program, 2016–2021.</li>
+        <li>Top 1% in national B.Sc. entrance exam (konkoor) in electrical engineering, 2016.</li>
       </ul>
     </section>
-  </div>
 
-  <!-- Publications -->
-  <div id="tab-publications" class="tab-panel">
-    <section class="section">
-      <h2>Publications</h2>
-      <h3>Journal Papers</h3>
+    <!-- Research section -->
+    <section id="research" class="section-card">
+      <h2>Research</h2>
+
+      <h3>Research Interests</h3>
+      <ul>
+        <li>Renewable &amp; Distributed Energy Resources integration</li>
+        <li>Mobile &amp; stationary energy storage systems, electric mobility</li>
+        <li>Microgrids and smart grids energy management</li>
+        <li>Operation, planning, reliability, and resilience of power systems</li>
+        <li>Data-driven &amp; AI-based modeling, optimization, and control</li>
+        <li>Power system dynamics, stability, and advanced control</li>
+      </ul>
+
+      <h3 id="publications">Selected Publications</h3>
       <ul>
         <li>
           <b>S. R. Moghadasi, Z. Dehghani Arani, M. Abedi, G. B. Gharehpetian.</b><br>
@@ -222,204 +344,25 @@
         </li>
       </ul>
     </section>
-  </div>
 
-  <!-- Experience -->
-  <div id="tab-experience" class="tab-panel">
-    <section class="section">
-      <h2>Work Experience</h2>
-      <ul>
-        <li>
-          <b>Research Assistant</b>, Amirkabir University of Technology, Iran, 2023–2025<br>
-          During my thesis research at the FACTS laboratory, I collaborated closely with graduate and doctoral
-          students, focusing on optimizing the use of Mobile Battery Energy Storage Systems (MBESS) within microgrids.
-          I developed and tested a novel multi-objective optimization framework using meta-heuristic algorithms to
-          efficiently manage MBESS placement and operational performance in a 33-bus distribution network. The results
-          demonstrated that MBESS not only reduced operational costs and power losses, but also significantly improved
-          voltage stability compared to traditional fixed storage systems. A key innovation in my research was the
-          integration of autonomous electric trucks for battery transport, which was analyzed alongside the uncertainties
-          of renewable energy sources and load variations.
-        </li>
-        <li>
-          <b>Internship</b>, Regional Electricity Company of Mazandaran Province, Iran, 2019<br>
-          During a three-month internship, I had the opportunity to learn about various types of transformers, cables,
-          and low-voltage lines. Additionally, I gained practical experience using AutoCAD software, where I was instructed
-          in wiring and positioning electric poles, as well as creating drawings for optimal power transmission.
-        </li>
-      </ul>
-    </section>
-  </div>
-
-  <!-- Awards -->
-  <div id="tab-awards" class="tab-panel">
-    <section class="section">
-      <h2>Awards &amp; Honors</h2>
-      <ul>
-        <li>
-          Obtaining the top-class rank in the following courses:<br>
-          FACTS (19.6/20, 1st rank), Power System Utilization (18/20, 2nd rank),
-          Management of Conventional and Smart Distribution Systems (18/20, 2nd rank),
-          Industrial Electronics (17.35/20, 3rd rank).
-        </li>
-        <li>Awarded fellowship, graduate program (Amirkabir University of Technology), 2023–2025.</li>
-        <li>Top 1% of the national master’s degree entrance exam in electrical engineering, 2022.</li>
-        <li>Awarded fellowship, undergraduate program, 2016–2021.</li>
-        <li>
-          Top 1% of the national university entrance exam (konkoor) in electrical engineering for B.Sc. degree, 2016.
-        </li>
-      </ul>
-    </section>
-  </div>
-
-  <!-- Technical & Research -->
-  <div id="tab-technical" class="tab-panel">
-    <section class="section">
-      <h2>Technical &amp; Research Experience</h2>
-      <ul>
-        <li>
-          <b>Reviewer Experience</b><br>
-          Reviewer for the following journals and conferences:
-          <ul>
-            <li>Journal of Energy Storage (reviewer of 5 papers)</li>
-            <li>Sustainable Cities and Society (reviewer of 1 paper)</li>
-            <li>Journal of Intelligent &amp; Fuzzy Systems (reviewer of 1 paper)</li>
-            <li>14th International Smart Grids Conference (reviewer of 2 papers)</li>
-            <li>29th Electrical Power Distribution Conference (reviewer of 5 papers)</li>
-            <li>15th International Smart Grids Conference (reviewer of 8 papers)</li>
-          </ul>
-        </li>
-
-        <li>
-          <b>During my master’s courses</b>
-          <ul>
-            <li>
-              <b>Power System Dynamics 1</b><br>
-              Classical and modern power system stability and control, dynamic modeling, PID-based controllers for DC
-              generator and synchronous machine, validation through MATLAB/Simulink simulations and operating-point
-              linearization.
-            </li>
-            <li>
-              <b>FACTS</b><br>
-              Fundamentals and advanced concepts of FACTS devices; PSCAD modeling and analysis of an SVC connected to a
-              13.8 kV transmission line; design of TCR/TSC-based reactive power controller with PI modulation and
-              coordinated switching logic.
-            </li>
-            <li>
-              <b>Distributed Generation (DG)</b><br>
-              Design of a hybrid DG supply system for a residential villa using HOMER; PV, wind, diesel, storage, and
-              economic modeling; optimization and sensitivity analysis for minimum NPC and reliable operation in
-              grid-connected and island modes.
-            </li>
-            <li>
-              <b>Power System Utilization</b><br>
-              Optimal energy scheduling in a microgrid using a hybrid PSO–ANN method on the IEEE-14 bus system in
-              MATLAB/Simulink; improved scheduling accuracy and reduced MAE compared to BPSO.
-            </li>
-            <li>
-              <b>Optimization in Electrical Power</b><br>
-              Economic Dispatch using Linear Programming (EDLP); segmentation and linearization of quadratic generator
-              cost curves; LP model solved via <code>linprog</code> for 850 MW demand.
-            </li>
-            <li>
-              <b>Management of Conventional and Smart Distribution Systems</b><br>
-              Multi-objective decentralized energy management in unbalanced smart distribution networks (IEEE-13 bus)
-              using GA and Monte-Carlo scenario generation; significant cost, loss, and voltage-profile improvements.
-            </li>
-          </ul>
-        </li>
-
-        <li>
-          <b>During my undergraduate courses</b><br>
-          Undergraduate Project: “Simulation of Speed Control of a BLDC Motor using Simulink MATLAB Software” (Dec. 2020).<br>
-          Microcontroller-based projects: “Smart Incubator and Smart Garden” systems.
-        </li>
-      </ul>
-    </section>
-  </div>
-
-  <!-- Skills & English -->
-  <div id="tab-skills" class="tab-panel">
-    <section class="section">
-      <h2>English &amp; Test Scores</h2>
-      <ul>
-        <li>TOEFL iBT – Test date: February 2026.</li>
-      </ul>
+    <!-- Q&A و Thoughts فقط فعلاً متن کوتاه -->
+    <section id="qa" class="section-card">
+      <h2>Q&amp;A</h2>
+      <p>
+        Here I plan to collect frequently asked questions about my research, publications,
+        and applications in power systems and AI. Content will be added soon.
+      </p>
     </section>
 
-    <section class="section">
-      <h2>Computer Skills</h2>
-      <ul>
-        <li>
-          Advanced user of Microsoft Office Suite (Word, Excel, PowerPoint) for data analysis, reporting, and presentation.
-        </li>
-        <li>
-          Skilled in using MATLAB/Simulink, EMTP-RV, PSCAD/EMTDC, ETAP, DIgSILENT PowerFactory, and HOMER Pro for power
-          system modeling, dynamic and transient simulation, fault analysis, microgrid design, and grid optimization.
-        </li>
-        <li>
-          Currently learning Python with a data-science focus, covering data cleaning, feature engineering, visualization
-          (NumPy, Pandas, Matplotlib), and supervised learning with scikit-learn (classification/regression); planning to
-          progress to TensorFlow/PyTorch for deep learning applied to smart grids and power system operation.
-        </li>
-      </ul>
+    <section id="thoughts" class="section-card">
+      <h2>Thoughts</h2>
+      <p>
+        Short notes on interesting papers, ideas in energy systems, and my journey learning data science
+        and machine learning for power systems will appear here in the future.
+      </p>
     </section>
   </div>
-
-  <!-- References -->
-  <div id="tab-references" class="tab-panel">
-    <section class="section">
-      <h2>References</h2>
-      <ul>
-        <li>
-          <b>Dr. Mehrdad Abedi</b> – Professor, Department of Electrical Engineering,
-          Amirkabir University of Technology, Tehran, Iran<br>
-          Email: <a href="mailto:abedi@aut.ac.ir">abedi@aut.ac.ir</a> · Phone: +98 (912) 179-4355
-        </li>
-        <li>
-          <b>Dr. Gevork B. Gharehpetian</b> – Professor, Department of Electrical Engineering,
-          Amirkabir University of Technology, Tehran, Iran<br>
-          Email: <a href="mailto:grptian@aut.ac.ir">grptian@aut.ac.ir</a> · Phone: +98 (912) 102-4208
-        </li>
-        <li>
-          <b>Dr. Mohammad Kazem Sheikh-El-Eslami</b> – Professor, Faculty of Electrical and Computer Engineering,
-          Tarbiat Modares University, Tehran, Iran<br>
-          Email: <a href="mailto:aleslam@modares.ac.ir">aleslam@modares.ac.ir</a> · Phone: +98 (912) 407-9584
-        </li>
-        <li>
-          <b>Dr. Zahra Dehghani Arani</b> – Postdoctoral Researcher, Department of Electrical Engineering,
-          Amirkabir University of Technology, Tehran, Iran<br>
-          Email: <a href="mailto:zahra.dehghani.a@aut.ac.ir">zahra.dehghani.a@aut.ac.ir</a> · Phone: +98 (913) 163-4104
-        </li>
-      </ul>
-    </section>
-  </div>
-
-</div>
-
-<script>
-  // Simple tab switching
-  const tabButtons = document.querySelectorAll('.tab-button');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-tab');
-
-      // update buttons
-      tabButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      // update panels
-      tabPanels.forEach(panel => {
-        if (panel.id === target) {
-          panel.classList.add('active');
-        } else {
-          panel.classList.remove('active');
-        }
-      });
-    });
-  });
-</script>
+</main>
 
 </body>
 </html>
