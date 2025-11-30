@@ -6,20 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --bg: #f7f7f7;
+      --bg: #f3f4f6;
+      --bg-alt: #e5e7eb;
       --card-bg: #ffffff;
-      --text-main: #111827;
+      --text-main: #0f172a;
       --text-muted: #6b7280;
       --accent: #2563eb;
+      --accent-soft: #dbeafe;
       --border: #e5e7eb;
+      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius-card: 16px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      background: radial-gradient(circle at top left, #e0f2fe 0, #f3f4f6 40%, #eef2ff 100%);
       color: var(--text-main);
       line-height: 1.7;
     }
@@ -27,80 +37,136 @@
     a {
       color: var(--accent);
       text-decoration: none;
+      transition: color 0.18s ease, text-shadow 0.18s ease;
     }
-    a:hover { text-decoration: underline; }
+    a:hover {
+      color: #1d4ed8;
+      text-shadow: 0 0 0.5px rgba(37, 99, 235, 0.5);
+    }
 
-    /* Top navigation (مثل عکس) */
+    /* Top navigation */
     .top-nav {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: #ffffffcc;
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
       padding: 14px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
+
     .brand {
-      font-weight: 600;
-      font-size: 1.05rem;
+      font-weight: 650;
+      font-size: 1.08rem;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      color: var(--text-main);
     }
+
     .brand span {
       font-weight: 400;
       color: var(--text-muted);
-    }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      font-size: 0.95rem;
-    }
-    .nav-links a {
-      color: var(--text-main);
-    }
-    .nav-links a:hover {
-      color: var(--accent);
+      letter-spacing: 0;
     }
 
-    /* Layout اصلی صفحه */
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      color: #4b5563;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #60a5fa, #4f46e5);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* Layout */
     .page {
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 40px 32px 48px;
       display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
+      grid-template-columns: 270px minmax(0, 1fr);
       gap: 48px;
     }
 
-    /* کارت سمت چپ مثل پروفایل */
+    /* Sidebar (left) */
     .sidebar {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 24px 20px 28px;
-      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #f9fafb);
+      border-radius: var(--radius-card);
+      padding: 26px 22px 30px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: var(--shadow-soft);
       text-align: center;
       align-self: flex-start;
       position: sticky;
-      top: 88px;
+      top: 96px;
     }
+
+    .profile-pic-wrap {
+      display: inline-flex;
+      padding: 4px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #60a5fa, #22c55e);
+      margin-bottom: 12px;
+    }
+
     .profile-pic {
       width: 140px;
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
       display: block;
-      margin: 0 auto 16px;
+      background: #e5e7eb;
     }
+
     .name {
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 700;
       margin-bottom: 4px;
     }
+
     .role {
       font-size: 0.9rem;
       color: var(--text-muted);
       margin-bottom: 18px;
+    }
+
+    .location {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 14px 0 18px;
+      background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.6), transparent);
     }
 
     .contact-list {
@@ -110,67 +176,121 @@
       text-align: left;
       font-size: 0.93rem;
     }
+
     .contact-list li {
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 10px;
     }
+
     .icon-circle {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1px solid var(--border);
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      background: #f3f4f6;
+      font-size: 13px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      box-shadow: 0 3px 8px rgba(148, 163, 184, 0.55);
       flex-shrink: 0;
     }
+
     .icon-circle.in {
       font-weight: 700;
       font-size: 11px;
+      background: #e0f2fe;
     }
 
-    /* محتوای سمت راست */
-    .content { min-width: 0; }
+    /* Right content */
+    .content {
+      min-width: 0;
+    }
 
     .section-card {
       background: var(--card-bg);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      padding: 30px 32px;
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      padding: 30px 32px 28px;
       margin-bottom: 26px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
     }
+
+    .section-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border-top: 3px solid transparent;
+      border-image: linear-gradient(90deg, #60a5fa, #22c55e) 1;
+      pointer-events: none;
+    }
+
     .section-card h1,
     .section-card h2 {
       margin-top: 0;
-      margin-bottom: 0.6em;
+      margin-bottom: 0.65em;
+      letter-spacing: 0.02em;
     }
+
     .section-card h1 {
       font-size: 1.7rem;
     }
-    .section-card p {
-      margin-top: 0.4em;
-      margin-bottom: 0.7em;
+
+    .section-card h2 {
+      font-size: 1.35rem;
     }
 
-    ul { padding-left: 1.2em; }
+    .section-card h3 {
+      margin-top: 1.2em;
+      margin-bottom: 0.45em;
+      font-size: 1.02rem;
+    }
 
-    /* ریسپانسیو */
-    @media (max-width: 900px) {
+    .section-card p {
+      margin-top: 0.35em;
+      margin-bottom: 0.7em;
+      color: #1f2933;
+    }
+
+    ul {
+      padding-left: 1.15em;
+      margin-top: 0.25em;
+    }
+
+    li + li {
+      margin-top: 0.35em;
+    }
+
+    code {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9em;
+      background: #f3f4f6;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
       .page {
         grid-template-columns: 1fr;
-        padding: 28px 20px 36px;
+        padding: 28px 20px 40px;
+        gap: 26px;
       }
       .sidebar {
         position: static;
+        max-width: 360px;
+        margin: 0 auto;
       }
     }
+
     @media (max-width: 640px) {
       .top-nav {
-        padding: 12px 18px;
+        padding: 10px 16px;
         flex-wrap: wrap;
         gap: 8px;
       }
@@ -180,7 +300,7 @@
         flex-wrap: wrap;
       }
       .section-card {
-        padding: 22px 20px;
+        padding: 22px 20px 22px;
       }
     }
   </style>
@@ -201,11 +321,16 @@
 </header>
 
 <main class="page">
-  <!-- ستون چپ مثل عکس ایرین -->
+  <!-- LEFT SIDEBAR -->
   <aside class="sidebar">
-    <img src="profile.jpg" alt="Seyed Reza Moghadasi" class="profile-pic">
+    <div class="profile-pic-wrap">
+      <img src="profile.jpg" alt="Seyed Reza Moghadasi" class="profile-pic">
+    </div>
     <div class="name">Seyed Reza Moghadasi</div>
-    <div class="role">Researcher, Power Systems Engineer</div>
+    <div class="role">Researcher · Power Systems Engineer</div>
+    <div class="location">Babolsar, Iran</div>
+
+    <div class="divider"></div>
 
     <ul class="contact-list">
       <li>
@@ -233,7 +358,7 @@
     </ul>
   </aside>
 
-  <!-- ستون راست: خوشامد مثل “Welcome to Irene’s Wonderland” -->
+  <!-- RIGHT CONTENT -->
   <div class="content" id="home">
     <section class="section-card">
       <h1>Welcome to Reza’s Power Systems Wonderland ⚡</h1>
@@ -253,7 +378,7 @@
       </p>
     </section>
 
-    <!-- CV section (برای لینک تب CV) -->
+    <!-- CV -->
     <section id="cv" class="section-card">
       <h2>CV – Education &amp; Experience</h2>
 
@@ -277,7 +402,7 @@
         <li>
           <b>Research Assistant</b>, Amirkabir University of Technology, 2023–2025 – MBESS planning and
           optimization in microgrids, 33-bus distribution network studies, and integration of autonomous
-          electric trucks for battery transport.
+          electric trucks for battery transport under uncertainty.
         </li>
         <li>
           <b>Internship</b>, Regional Electricity Company of Mazandaran Province, 2019 – Practical work on
@@ -297,20 +422,50 @@
         <li>Awarded fellowship, undergraduate program, 2016–2021.</li>
         <li>Top 1% in national B.Sc. entrance exam (konkoor) in electrical engineering, 2016.</li>
       </ul>
+
+      <h3>English &amp; Computer Skills</h3>
+      <ul>
+        <li>TOEFL iBT – Test date: February 2026.</li>
+        <li>Microsoft Office (Word, Excel, PowerPoint) for analysis, reporting, and presentations.</li>
+        <li>MATLAB/Simulink, EMTP-RV, PSCAD/EMTDC, ETAP, DIgSILENT PowerFactory, HOMER Pro.</li>
+        <li>
+          Currently learning Python for data science (NumPy, Pandas, Matplotlib, scikit-learn) and aiming to
+          use TensorFlow/PyTorch for deep learning in smart grids and power system operation.
+        </li>
+      </ul>
     </section>
 
-    <!-- Research section -->
+    <!-- Research -->
     <section id="research" class="section-card">
       <h2>Research</h2>
 
       <h3>Research Interests</h3>
       <ul>
         <li>Renewable &amp; Distributed Energy Resources integration</li>
-        <li>Mobile &amp; stationary energy storage systems, electric mobility</li>
+        <li>Mobile &amp; stationary energy storage systems and electric mobility</li>
         <li>Microgrids and smart grids energy management</li>
         <li>Operation, planning, reliability, and resilience of power systems</li>
         <li>Data-driven &amp; AI-based modeling, optimization, and control</li>
         <li>Power system dynamics, stability, and advanced control</li>
+      </ul>
+
+      <h3>Technical &amp; Research Experience</h3>
+      <ul>
+        <li>
+          <b>Reviewer</b> for Journal of Energy Storage (5 papers), Sustainable Cities and Society (1),
+          Journal of Intelligent &amp; Fuzzy Systems (1), 14th &amp; 15th International Smart Grids Conferences,
+          and the 29th Electrical Power Distribution Conference.
+        </li>
+        <li>
+          Graduate projects on power system dynamics and control (DC generator and synchronous machine
+          modeling and PID/AVR/governor design), SVC modeling in PSCAD, hybrid DG system design in HOMER,
+          PSO–ANN based microgrid scheduling, LP-based economic dispatch, and GA-based decentralized energy
+          management in smart distribution networks.
+        </li>
+        <li>
+          Undergraduate projects: BLDC motor speed control in MATLAB/Simulink; Smart Incubator and Smart
+          Garden microcontroller-based systems.
+        </li>
       </ul>
 
       <h3 id="publications">Selected Publications</h3>
@@ -345,21 +500,23 @@
       </ul>
     </section>
 
-    <!-- Q&A و Thoughts فقط فعلاً متن کوتاه -->
+    <!-- Q&A -->
     <section id="qa" class="section-card">
       <h2>Q&amp;A</h2>
       <p>
-        Here I plan to collect frequently asked questions about my research, publications,
-        and applications in power systems and AI. Content will be added soon.
+        Here I will collect frequently asked questions about my research, publications, and applications of
+        data-driven methods in power systems. Content will be added gradually.
       </p>
     </section>
 
+    <!-- Thoughts -->
     <section id="thoughts" class="section-card">
       <h2>Thoughts</h2>
       <p>
-        Short notes on interesting papers, ideas in energy systems, and my journey learning data science
+        Short notes on interesting papers, ideas in energy systems, and my journey in learning data science
         and machine learning for power systems will appear here in the future.
       </p>
+      <p>Stay tuned! 🙂</p>
     </section>
   </div>
 </main>
